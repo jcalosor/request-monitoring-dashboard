@@ -1,16 +1,27 @@
+import dotenv from 'dotenv';
 import { useState, useEffect } from "react";
-import socket from "../../lib/socket";
+import Pusher from 'pusher-js';
+
+dotenv.config();
+
+const pusher = new Pusher(process.env.PUSH_APP_KEY || "test", {
+    cluster: process.env.PUSH_APP_CLUSTER || "api"
+});
+
+const channel = pusher.subscribe(process.env.PUSH_CHANNEL || 'request_monitor');
 
 const RealTimeUpdates = () => {
-    const [updates, setUpdates] = useState<any[]>([]);
+    const [updates, setUpdates] = useState<string[]>([]);
 
     useEffect(() => {
-        socket.on("newData", (data) => {
-            setUpdates((prev) => [data, ...prev].slice(0, 5));
-        });
+        const handleNewRequest = (data: { message: string }) => {
+            setUpdates((prev) => [data.message, ...prev].slice(0, 10)); // Keep only the latest 10 messages
+        };
+
+        channel.bind('new_request', handleNewRequest);
 
         return () => {
-            socket.off("newData");
+            channel.unbind('new_request', handleNewRequest); // Clean up the event binding on unmount
         };
     }, []);
 
@@ -18,9 +29,9 @@ const RealTimeUpdates = () => {
         <div className="p-4 bg-white rounded shadow">
             <h2 className="text-lg font-semibold">Real-Time Updates</h2>
             <ul>
-                {updates.map((update, index) => (
-                    <li key={index} className="py-1">
-                        {update.name} (Age: {update.age}) - Active: {update.isActive ? "Yes" : "No"}
+                {updates.map((message, index) => (
+                    <li key={index} className="border-b py-2">
+                        {message}
                     </li>
                 ))}
             </ul>
