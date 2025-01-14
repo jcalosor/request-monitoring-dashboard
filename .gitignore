@@ -6,3 +6,4 @@ dist
 dist/
 .next
 .DS_Store
+lib/pusher.ts

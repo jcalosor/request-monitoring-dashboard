@@ -1,27 +1,23 @@
-import dotenv from 'dotenv';
 import { useState, useEffect } from "react";
 import Pusher from 'pusher-js';
+import pusherConfig from "../../lib/pusher";
 
-dotenv.config();
-
-const pusher = new Pusher(process.env.PUSH_APP_KEY || "test", {
-    cluster: process.env.PUSH_APP_CLUSTER || "api"
-});
-
-const channel = pusher.subscribe(process.env.PUSH_CHANNEL || 'request_monitor');
+const pusher = new Pusher(pusherConfig.key, {cluster: pusherConfig.cluster,});
+const channel = pusher.subscribe(pusherConfig.channel);
 
 const RealTimeUpdates = () => {
     const [updates, setUpdates] = useState<string[]>([]);
 
     useEffect(() => {
-        const handleNewRequest = (data: { message: string }) => {
-            setUpdates((prev) => [data.message, ...prev].slice(0, 10)); // Keep only the latest 10 messages
+        const handleNewRequest = (data: { data: string }) => {
+            console.log(data.data);
+            setUpdates((prev) => [data.data, ...prev].slice(0, 10)); // Keep only the latest 10 messages
         };
 
-        channel.bind('new_request', handleNewRequest);
+        channel.bind(pusherConfig.event, handleNewRequest);
 
         return () => {
-            channel.unbind('new_request', handleNewRequest); // Clean up the event binding on unmount
+            channel.unbind(pusherConfig.event, handleNewRequest); // Clean up the event binding on unmount
         };
     }, []);
 
@@ -29,9 +25,12 @@ const RealTimeUpdates = () => {
         <div className="p-4 bg-white rounded shadow">
             <h2 className="text-lg font-semibold">Real-Time Updates</h2>
             <ul>
-                {updates.map((message, index) => (
+                {updates.map((data, index) => (
                     <li key={index} className="border-b py-2">
-                        {message}
+                        <span><b>name:</b> {JSON.parse(data).name} &nbsp;</span>
+                        <span><b>age:</b> {JSON.parse(data).age} &nbsp;</span>
+                        <span><b>is active:</b> {JSON.parse(data).isActive.toString()} &nbsp;</span>
+                        <span><b>created:</b> {JSON.parse(data).createdAt} &nbsp;</span>
                     </li>
                 ))}
             </ul>
