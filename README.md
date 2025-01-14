@@ -1,6 +1,12 @@
 
 # README
 
+
+## Requirements
+- Node
+- [Pusher Account](pusher.com) [pusher.com] this is needed for the websocket feature to function
+
+
 ## Setup Instructions
 
 1. **Clone the Repository**
@@ -15,20 +21,34 @@
    npm install
    ```
 
-3. **Start the Development Server**
+3. **Create the pusher config** In `lib/` directory copy pusher.ts.txt to pusher.ts, and fill up the necessary details:
+   ```bash
+   const pusherConfig = {
+       channel: "",
+       event: "",
+       appId: "",
+       key: "",
+       secret: "",
+       cluster: "",
+       useTLS: false,
+   }
+   ```
+   follow the steps in [pusher.com](pusher.com) to retrieve these values.
+
+4. **Start the Development Server**
    ```bash
    npm run dev
    ```
    The application will be available at [http://localhost:3000](http://localhost:3000).
 
-4. **Build for Production**
+5. **Build for Production**
    To create an optimized production build:
    ```bash
    npm run build
    npm start
    ```
 
-5. **Run Tests**
+6. **Run Tests**
    To execute tests (if configured):
    ```bash
    npm test
