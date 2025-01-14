@@ -1,0 +1,11 @@
+const pusherConfig = {
+    channel: "",
+    event: "",
+    appId: "",
+    key: "",
+    secret: "",
+    cluster: "",
+    useTLS: false,
+}
+
+export default pusherConfig;
