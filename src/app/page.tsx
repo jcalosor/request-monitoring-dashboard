@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from "react";
-import RealTimeUpdates from "../components/RealTimeUpdates";
 import RequestHistory from "../components/RequestHistory";
 import Logo from "../components/Logo";
 import Navigation from "../components/Navigation";
@@ -9,50 +8,14 @@ import RealTimeAlert from "../components/alerts/RealTimeAlert";
 
 const Dashboard = () => {
 
-    // const renderContent = () => {
-    //     switch (activePage) {
-    //         case "list":
-    //             return <RequestHistory />;
-    //         case "updates":
-    //             return <RealTimeUpdates />;
-    //         default:
-    //             return <RequestHistory />;
-    //     }
-    // };
-
     return (
         <div className="flex h-screen bg-gray-100">
             {/* Left Sidebar */}
             <div className="w-1/5 bg-white shadow-lg">
                 <div className="p-6">
-                    {/*<h1 className="text-3xl font-bold underline">Admin Tools</h1>*/}
                     <div className="logo container mx-auto">
                         <Logo />
                     </div>
-                    {/*<nav className="space-y-2 flex items-center justify-between my-28">*/}
-                    {/*    <ul className="space-y-4">*/}
-                    {/*        <li>*/}
-                    {/*            <button*/}
-                    {/*                onClick={() => setActivePage("list")}*/}
-                    {/*                className={`text-blue-600 hover:underline ${*/}
-                    {/*                    activePage === "list" ? "font-bold" : ""*/}
-                    {/*                }`}*/}
-                    {/*            >*/}
-                    {/*                Home*/}
-                    {/*            </button>*/}
-                    {/*        </li>*/}
-                    {/*        <li>*/}
-                    {/*            <button*/}
-                    {/*                onClick={() => setActivePage("updates")}*/}
-                    {/*                className={`text-blue-600 hover:underline ${*/}
-                    {/*                    activePage === "updates" ? "font-bold" : ""*/}
-                    {/*                }`}*/}
-                    {/*            >*/}
-                    {/*                Realtime Updates*/}
-                    {/*            </button>*/}
-                    {/*        </li>*/}
-                    {/*    </ul>*/}
-                    {/*</nav>*/}
                     <Navigation />
                 </div>
             </div>
