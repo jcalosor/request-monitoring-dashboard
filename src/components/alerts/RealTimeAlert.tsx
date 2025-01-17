@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import {Alert} from "@mui/material";
+import AlertTitle from '@mui/material/AlertTitle';
+import React, {useEffect, useState} from "react";
 import Pusher from 'pusher-js';
-import pusherConfig from "../../lib/pusher";
+import pusherConfig from "../../../lib/pusher";
 
 const pusher = new Pusher(pusherConfig.key, {cluster: pusherConfig.cluster,});
 const channel = pusher.subscribe(pusherConfig.channel);
 
-const RealTimeUpdates = () => {
+const RealTimeAlert: React.FC = () => {
     const [updates, setUpdates] = useState<string[]>([]);
 
     useEffect(() => {
         const handleNewRequest = (data: { data: string }) => {
-            setUpdates((prev) => [data.data, ...prev].slice(0, 10)); // Keep only the latest 10 messages
+            setUpdates((prev) => [data.data, ...prev].slice(0, 1)); // Keep only the latest 10 messages
         };
 
         channel.bind(pusherConfig.event, handleNewRequest);
@@ -21,20 +23,21 @@ const RealTimeUpdates = () => {
     }, []);
 
     return (
-        <div className="p-4 bg-white rounded shadow">
-            <h2 className="text-lg font-semibold">Real-Time Updates</h2>
-            <ul>
+        <div style={{ margin: "0 auto", }}>
+            <div style={{ position: "absolute", top: 0, right: 0, zIndex: 999, width: '50%' }} >
                 {updates.map((data, index) => (
-                    <li key={index} className="border-b py-2">
+                    <Alert variant="filled" severity="success">
+                        <AlertTitle sx={{textAlign: "left"}}>New user created!</AlertTitle>
                         <span><b>name:</b> {JSON.parse(data).name} &nbsp;</span>
                         <span><b>age:</b> {JSON.parse(data).age} &nbsp;</span>
                         <span><b>is active:</b> {JSON.parse(data).isActive.toString()} &nbsp;</span>
                         <span><b>created:</b> {JSON.parse(data).createdAt} &nbsp;</span>
-                    </li>
+                    </Alert>
                 ))}
-            </ul>
+            </div>
+
         </div>
     );
-};
+}
 
-export default RealTimeUpdates;
+export default RealTimeAlert;

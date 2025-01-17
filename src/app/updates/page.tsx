@@ -1,18 +1,17 @@
 'use client'
 
-import React, { useState } from "react";
-import RequestHistory from "../components/RequestHistory";
-import Logo from "../components/Logo";
-import Navigation from "../components/Navigation";
-import RealTimeAlert from "../components/alerts/RealTimeAlert";
+import React from "react";
+import Logo from "../../components/Logo";
+import Navigation from "../../components/Navigation";
+import RealTimeUpdates from "../../components/RealTimeUpdates";
 
-const Dashboard = () => {
-
+const UpdatesPage = () => {
     return (
         <div className="flex h-screen bg-gray-100">
             {/* Left Sidebar */}
             <div className="w-1/5 bg-white shadow-lg">
                 <div className="p-6">
+                    {/*<h1 className="text-3xl font-bold underline">Admin Tools</h1>*/}
                     <div className="logo container mx-auto">
                         <Logo />
                     </div>
@@ -44,12 +43,11 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="mt-6">
-                    <RealTimeAlert />
-                    <RequestHistory />
+                    <RealTimeUpdates />
                 </div>
             </div>
         </div>
     );
-};
+}
 
-export default Dashboard;
+export default UpdatesPage;
