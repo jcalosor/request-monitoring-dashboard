@@ -4,20 +4,21 @@ import React, { useState } from "react";
 import RealTimeUpdates from "../components/RealTimeUpdates";
 import RequestHistory from "../components/RequestHistory";
 import Logo from "../components/Logo";
+import Navigation from "../components/Navigation";
+import RealTimeAlert from "../components/alerts/RealTimeAlert";
 
 const Dashboard = () => {
-    const [activePage, setActivePage] = useState("list"); // Default to "list"
 
-    const renderContent = () => {
-        switch (activePage) {
-            case "list":
-                return <RequestHistory />;
-            case "updates":
-                return <RealTimeUpdates />;
-            default:
-                return <RequestHistory />;
-        }
-    };
+    // const renderContent = () => {
+    //     switch (activePage) {
+    //         case "list":
+    //             return <RequestHistory />;
+    //         case "updates":
+    //             return <RealTimeUpdates />;
+    //         default:
+    //             return <RequestHistory />;
+    //     }
+    // };
 
     return (
         <div className="flex h-screen bg-gray-100">
@@ -28,30 +29,31 @@ const Dashboard = () => {
                     <div className="logo container mx-auto">
                         <Logo />
                     </div>
-                    <nav className="space-y-2 flex items-center justify-between my-28">
-                        <ul className="space-y-4">
-                            <li>
-                                <button
-                                    onClick={() => setActivePage("list")}
-                                    className={`text-blue-600 hover:underline ${
-                                        activePage === "list" ? "font-bold" : ""
-                                    }`}
-                                >
-                                    Home
-                                </button>
-                            </li>
-                            <li>
-                                <button
-                                    onClick={() => setActivePage("updates")}
-                                    className={`text-blue-600 hover:underline ${
-                                        activePage === "updates" ? "font-bold" : ""
-                                    }`}
-                                >
-                                    Realtime Updates
-                                </button>
-                            </li>
-                        </ul>
-                    </nav>
+                    {/*<nav className="space-y-2 flex items-center justify-between my-28">*/}
+                    {/*    <ul className="space-y-4">*/}
+                    {/*        <li>*/}
+                    {/*            <button*/}
+                    {/*                onClick={() => setActivePage("list")}*/}
+                    {/*                className={`text-blue-600 hover:underline ${*/}
+                    {/*                    activePage === "list" ? "font-bold" : ""*/}
+                    {/*                }`}*/}
+                    {/*            >*/}
+                    {/*                Home*/}
+                    {/*            </button>*/}
+                    {/*        </li>*/}
+                    {/*        <li>*/}
+                    {/*            <button*/}
+                    {/*                onClick={() => setActivePage("updates")}*/}
+                    {/*                className={`text-blue-600 hover:underline ${*/}
+                    {/*                    activePage === "updates" ? "font-bold" : ""*/}
+                    {/*                }`}*/}
+                    {/*            >*/}
+                    {/*                Realtime Updates*/}
+                    {/*            </button>*/}
+                    {/*        </li>*/}
+                    {/*    </ul>*/}
+                    {/*</nav>*/}
+                    <Navigation />
                 </div>
             </div>
 
@@ -61,7 +63,7 @@ const Dashboard = () => {
                     <h1 className="text-2xl font-bold">Dashboard</h1>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Example Dashboard Cards */}
+                    {/* Example Dashboard Cards - @todo: this should all be separate components. */}
                     <div className="p-4 bg-white shadow rounded-lg">
                         <h2 className="text-lg font-semibold mb-2">Earnings Report</h2>
                         <p className="text-2xl font-bold">$586</p>
@@ -79,7 +81,8 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="mt-6">
-                    {renderContent()}
+                    <RealTimeAlert />
+                    <RequestHistory />
                 </div>
             </div>
         </div>
